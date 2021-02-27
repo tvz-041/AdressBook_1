@@ -1,3 +1,6 @@
+#include <QDebug>
+#include <QJsonObject>
+
 #include "AdressBookEntry.h"
 #include "ui_AdressBookEntry.h"
 
@@ -54,6 +57,7 @@ QJsonObject AdressBookEntry::toJson() const
 void AdressBookEntry::save()
 {
 	ui->pushButton_save->setText("Сохранить");
+	emit propertiesChanged(toJson());
 }
 
 void AdressBookEntry::markUnsavedChanges()

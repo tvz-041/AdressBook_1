@@ -18,6 +18,9 @@ public:
 	void fromJson(const QJsonObject &properties);
 	QJsonObject toJson() const;
 
+signals:
+	void propertiesChanged(const QJsonObject &properties);
+
 public slots:
 	void save();
 
