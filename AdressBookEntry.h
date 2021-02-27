@@ -15,6 +15,9 @@ public:
 	AdressBookEntry(QWidget *parent = nullptr);
 	~AdressBookEntry();
 
+	void fromJson(const QJsonObject &properties);
+	QJsonObject toJson() const;
+
 public slots:
 	void save();
 
