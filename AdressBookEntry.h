@@ -29,5 +29,7 @@ private slots:
 
 private:
 	Ui::AdressBookEntry *ui;
+
+	bool m_hasUnsavedChanges = false;
 };
 #endif // ADRESSBOOKENTRY_H

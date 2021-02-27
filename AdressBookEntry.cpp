@@ -28,6 +28,8 @@ AdressBookEntry::~AdressBookEntry()
 
 void AdressBookEntry::fromJson(const QJsonObject &properties)
 {
+	ui->plainTextEdit_other->blockSignals(true);
+
 	ui->lineEdit_firstName->setText(properties["firstName"].toString());
 	ui->lineEdit_secondName->setText(properties["secondName"].toString());
 	ui->lineEdit_thirdName->setText(properties["thirdName"].toString());
@@ -36,7 +38,7 @@ void AdressBookEntry::fromJson(const QJsonObject &properties)
 	ui->lineEdit_mobilePhoneNumber->setText(properties["mobilePhoneNumber"].toString());
 	ui->plainTextEdit_other->setPlainText(properties["other"].toString());
 
-	ui->pushButton_save->setText("Сохранить");
+	ui->plainTextEdit_other->blockSignals(false);
 }
 
 QJsonObject AdressBookEntry::toJson() const
@@ -56,11 +58,17 @@ QJsonObject AdressBookEntry::toJson() const
 
 void AdressBookEntry::save()
 {
-	ui->pushButton_save->setText("Сохранить");
-	emit propertiesChanged(toJson());
+	if (m_hasUnsavedChanges) {
+		ui->pushButton_save->setText("Сохранить");
+		emit propertiesChanged(toJson());
+		m_hasUnsavedChanges = false;
+	}
 }
 
 void AdressBookEntry::markUnsavedChanges()
 {
-	ui->pushButton_save->setText("Сохранить*");
+	if (!m_hasUnsavedChanges) {
+		ui->pushButton_save->setText("Сохранить*");
+		m_hasUnsavedChanges = true;
+	}
 }
