@@ -13,6 +13,8 @@ AdressBook::AdressBook(QWidget *parent) :
 	ui->mainLayout->addWidget(m_entryEditForm);
 	connect(ui->pushButton_add, &QPushButton::clicked, this, &AdressBook::addEntry);
 	connect(ui->pushButton_remove, &QPushButton::clicked, this, &AdressBook::removeSelectedEntry);
+	connect(ui->listWidget, &QListWidget::currentRowChanged, this, &AdressBook::loadEntryData);
+	connect(m_entryEditForm, &AdressBookEntry::entryChanged, this, &AdressBook::saveCurrentEntryData);
 }
 
 AdressBook::~AdressBook()
@@ -31,9 +33,26 @@ void AdressBook::addEntry()
 
 void AdressBook::removeSelectedEntry()
 {
-	QList<QListWidgetItem *> selectedItems = ui->listWidget->selectedItems();
+	QListWidgetItem *currentItem = ui->listWidget->currentItem();
 
-	if (!selectedItems.isEmpty()) {
-		delete selectedItems.first();
+	if (currentItem != nullptr) {
+		delete currentItem;
+	}
+}
+
+void AdressBook::loadEntryData(const int index)
+{
+	if (index > -1 && index < m_entries.count()) {
+		m_entryEditForm->fromEntry(m_entries[index]);
+	}
+}
+
+void AdressBook::saveCurrentEntryData(const Entry &entry)
+{
+	int rowIndex = ui->listWidget->currentRow();
+
+	if (rowIndex > -1 && rowIndex < m_entries.count()) {
+		m_entries[rowIndex] = entry;
+		ui->listWidget->currentItem()->setText(entry.fullName());
 	}
 }

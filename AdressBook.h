@@ -22,6 +22,8 @@ public:
 public slots:
 	void addEntry();
 	void removeSelectedEntry();
+	void loadEntryData(const int index);
+	void saveCurrentEntryData(const Entry &entry);
 
 private:
 	Ui::AdressBook *ui;

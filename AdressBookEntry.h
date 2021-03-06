@@ -25,6 +25,7 @@ public:
 
 signals:
 	void propertiesChanged(const QJsonObject &properties);
+	void entryChanged(const Entry &entry);
 
 public slots:
 	void save();

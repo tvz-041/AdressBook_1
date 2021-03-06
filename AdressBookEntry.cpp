@@ -92,7 +92,7 @@ void AdressBookEntry::save()
 {
 	if (m_hasUnsavedChanges) {
 		ui->pushButton_save->setText("Сохранить");
-		emit propertiesChanged(toJson());
+		emit entryChanged(toEntry());
 		m_hasUnsavedChanges = false;
 	}
 }
