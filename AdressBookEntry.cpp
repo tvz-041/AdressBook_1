@@ -41,6 +41,11 @@ void AdressBookEntry::fromJson(const QJsonObject &properties)
 	ui->plainTextEdit_other->setPlainText(properties["other"].toString());
 
 	ui->plainTextEdit_other->blockSignals(false);
+
+	if (m_hasUnsavedChanges) {
+		ui->pushButton_save->setText("Сохранить");
+		m_hasUnsavedChanges = false;
+	}
 }
 
 QJsonObject AdressBookEntry::toJson() const
@@ -71,6 +76,11 @@ void AdressBookEntry::fromEntry(const Entry &entry)
 	ui->plainTextEdit_other->setPlainText(entry.other);
 
 	ui->plainTextEdit_other->blockSignals(false);
+
+	if (m_hasUnsavedChanges) {
+		ui->pushButton_save->setText("Сохранить");
+		m_hasUnsavedChanges = false;
+	}
 }
 
 Entry AdressBookEntry::toEntry() const

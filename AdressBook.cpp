@@ -11,6 +11,7 @@ AdressBook::AdressBook(QWidget *parent) :
 
 	m_entryEditForm = new AdressBookEntry(ui->centralwidget);
 	ui->mainLayout->addWidget(m_entryEditForm);
+
 	connect(ui->pushButton_add, &QPushButton::clicked, this, &AdressBook::addEntry);
 	connect(ui->pushButton_remove, &QPushButton::clicked, this, &AdressBook::removeSelectedEntry);
 	connect(ui->listWidget, &QListWidget::currentRowChanged, this, &AdressBook::loadEntryData);
