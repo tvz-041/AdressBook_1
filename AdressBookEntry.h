@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+struct Entry;
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class AdressBookEntry; }
 QT_END_NAMESPACE
@@ -17,6 +19,9 @@ public:
 
 	void fromJson(const QJsonObject &properties);
 	QJsonObject toJson() const;
+
+	void fromEntry(const Entry &entry);
+	Entry toEntry() const;
 
 signals:
 	void propertiesChanged(const QJsonObject &properties);

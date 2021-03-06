@@ -1,6 +1,8 @@
 #include <QDebug>
 #include <QJsonObject>
 
+#include "Entry.h"
+
 #include "AdressBookEntry.h"
 #include "ui_AdressBookEntry.h"
 
@@ -54,6 +56,36 @@ QJsonObject AdressBookEntry::toJson() const
 	properties["other"]				= ui->plainTextEdit_other->toPlainText();
 
 	return properties;
+}
+
+void AdressBookEntry::fromEntry(const Entry &entry)
+{
+	ui->plainTextEdit_other->blockSignals(true);
+
+	ui->lineEdit_firstName->setText(entry.firstName);
+	ui->lineEdit_secondName->setText(entry.secondName);
+	ui->lineEdit_thirdName->setText(entry.thirdName);
+	ui->lineEdit_adress->setText(entry.adress);
+	ui->lineEdit_homePhoneNumber->setText(entry.homePhoneNumber);
+	ui->lineEdit_mobilePhoneNumber->setText(entry.mobilePhoneNumber);
+	ui->plainTextEdit_other->setPlainText(entry.other);
+
+	ui->plainTextEdit_other->blockSignals(false);
+}
+
+Entry AdressBookEntry::toEntry() const
+{
+	Entry entry;
+
+	entry.firstName			= ui->lineEdit_firstName->text();
+	entry.secondName		= ui->lineEdit_secondName->text();
+	entry.thirdName			= ui->lineEdit_thirdName->text();
+	entry.adress			= ui->lineEdit_adress->text();
+	entry.homePhoneNumber	= ui->lineEdit_homePhoneNumber->text();
+	entry.mobilePhoneNumber = ui->lineEdit_mobilePhoneNumber->text();
+	entry.other				= ui->plainTextEdit_other->toPlainText();
+
+	return entry;
 }
 
 void AdressBookEntry::save()
