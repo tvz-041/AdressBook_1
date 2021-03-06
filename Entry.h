@@ -13,6 +13,11 @@ struct Entry
 	QString homePhoneNumber;
 	QString mobilePhoneNumber;
 	QString other;
+
+	QString fullName() const
+	{
+		return secondName + ' ' + firstName + ' ' + thirdName;
+	}
 };
 
 #endif // ENTRY_H

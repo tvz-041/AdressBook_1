@@ -19,6 +19,10 @@ public:
 	explicit AdressBook(QWidget *parent = nullptr);
 	~AdressBook();
 
+public slots:
+	void addEntry();
+	void removeSelectedEntry();
+
 private:
 	Ui::AdressBook *ui;
 	AdressBookEntry *m_entryEditForm = nullptr;
