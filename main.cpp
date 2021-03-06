@@ -3,6 +3,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "AdressBook.h"
 #include "AdressBookEntry.h"
 
 QJsonObject loadJsonFromFile(const QString &filename)
@@ -39,12 +40,15 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 
-	AdressBookEntry entry;
+//	AdressBookEntry entry;
 
-	entry.fromJson(loadJsonFromFile("AdressBookEntry.json"));
-	QObject::connect(&entry, &AdressBookEntry::propertiesChanged, &saveAdressBookEntryToFile);
+//	entry.fromJson(loadJsonFromFile("AdressBookEntry.json"));
+//	QObject::connect(&entry, &AdressBookEntry::propertiesChanged, &saveAdressBookEntryToFile);
 
-	entry.show();
+//	entry.show();
+
+	AdressBook adressBook;
+	adressBook.show();
 
 	return a.exec();
 }
