@@ -37,6 +37,7 @@ void AdressBook::removeSelectedEntry()
 	QListWidgetItem *currentItem = ui->listWidget->currentItem();
 
 	if (currentItem != nullptr) {
+		m_entries.remove(ui->listWidget->currentRow());
 		delete currentItem;
 	}
 }
