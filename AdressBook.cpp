@@ -1,3 +1,6 @@
+#include <QModelIndex>
+#include <QStringListModel>
+
 #include "AdressBookEntry.h"
 
 #include "AdressBook.h"
@@ -11,10 +14,20 @@ AdressBook::AdressBook(QWidget *parent) :
 
 	m_entryEditForm = new AdressBookEntry(ui->centralwidget);
 	ui->mainLayout->addWidget(m_entryEditForm);
+	m_model = new QStringListModel(this);
+	ui->listView->setModel(m_model);
+
+	//TODO: remove this block
+	{
+		QListView *view = new QListView(this);
+		view->setModel(m_model);
+		ui->centralwidget->layout()->addWidget(view);
+	}
 
 	connect(ui->pushButton_add, &QPushButton::clicked, this, &AdressBook::addEntry);
 	connect(ui->pushButton_remove, &QPushButton::clicked, this, &AdressBook::removeSelectedEntry);
-	connect(ui->listWidget, &QListWidget::currentRowChanged, this, &AdressBook::loadEntryData);
+	connect(ui->listView->selectionModel(), &QItemSelectionModel::currentRowChanged,
+			this, &AdressBook::loadEntryData);
 	connect(m_entryEditForm, &AdressBookEntry::entryChanged, this, &AdressBook::saveCurrentEntryData);
 }
 
@@ -29,32 +42,34 @@ void AdressBook::addEntry()
 	entry.firstName = "Имя";
 	entry.secondName = "Фамилия";
 	m_entries.append(entry);
-	ui->listWidget->addItem(entry.fullName());
+	int newRowIndex = m_model->rowCount();
+	m_model->insertRow(newRowIndex);
+	m_model->setData(m_model->index(newRowIndex), entry.fullName());
 }
 
 void AdressBook::removeSelectedEntry()
 {
-	QListWidgetItem *currentItem = ui->listWidget->currentItem();
+	QModelIndex currentIndex = ui->listView->selectionModel()->currentIndex();
 
-	if (currentItem != nullptr) {
-		m_entries.remove(ui->listWidget->currentRow());
-		delete currentItem;
+	if (currentIndex.isValid()) {
+		m_entries.remove(currentIndex.row());
+		m_model->removeRow(currentIndex.row());
 	}
 }
 
-void AdressBook::loadEntryData(const int index)
+void AdressBook::loadEntryData(const QModelIndex &index)
 {
-	if (index > -1 && index < m_entries.count()) {
-		m_entryEditForm->fromEntry(m_entries[index]);
+	if (index.row() > -1 && index.row() < m_entries.count()) {
+		m_entryEditForm->fromEntry(m_entries[index.row()]);
 	}
 }
 
 void AdressBook::saveCurrentEntryData(const Entry &entry)
 {
-	int rowIndex = ui->listWidget->currentRow();
+	QModelIndex currentIndex = ui->listView->selectionModel()->currentIndex();
 
-	if (rowIndex > -1 && rowIndex < m_entries.count()) {
-		m_entries[rowIndex] = entry;
-		ui->listWidget->currentItem()->setText(entry.fullName());
+	if (currentIndex.isValid()) {
+		m_entries[currentIndex.row()] = entry;
+		m_model->setData(currentIndex, entry.fullName());
 	}
 }

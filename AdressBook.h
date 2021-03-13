@@ -5,6 +5,8 @@
 
 #include "Entry.h"
 
+class QStringListModel;
+
 class AdressBookEntry;
 
 namespace Ui {
@@ -22,13 +24,14 @@ public:
 public slots:
 	void addEntry();
 	void removeSelectedEntry();
-	void loadEntryData(const int index);
+	void loadEntryData(const QModelIndex &index);
 	void saveCurrentEntryData(const Entry &entry);
 
 private:
 	Ui::AdressBook *ui;
 	AdressBookEntry *m_entryEditForm = nullptr;
 	QVector<Entry> m_entries;
+	QStringListModel *m_model = nullptr;
 };
 
 #endif // ADRESSBOOK_H
