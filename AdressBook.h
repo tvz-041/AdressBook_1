@@ -5,7 +5,7 @@
 
 #include "Entry.h"
 
-class QStringListModel;
+class EntriesModel;
 
 class AdressBookEntry;
 
@@ -30,8 +30,7 @@ public slots:
 private:
 	Ui::AdressBook *ui;
 	AdressBookEntry *m_entryEditForm = nullptr;
-	QVector<Entry> m_entries;
-	QStringListModel *m_model = nullptr;
+	EntriesModel *m_model = nullptr;
 };
 
 #endif // ADRESSBOOK_H

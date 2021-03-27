@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     AdressBook.cpp \
+    EntriesModel.cpp \
     Entry.cpp \
     main.cpp \
     AdressBookEntry.cpp
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     AdressBook.h \
     AdressBookEntry.h \
+    EntriesModel.h \
     Entry.h
 
 FORMS += \
